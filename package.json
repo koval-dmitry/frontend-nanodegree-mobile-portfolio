@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/koval-dmitry/frontend-nanodegree-mobile-portfolio#readme",
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "browser-sync": "^2.11.1",
+    "gulp": "^3.9.1",
+    "run-sequence": "^1.1.5"
   }
 }
