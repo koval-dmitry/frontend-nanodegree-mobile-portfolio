@@ -53,10 +53,23 @@ gulp.task('minifyhtml', function() {
   })).pipe(gulp.dest('dist'));
 });
 
+// Minify Pizza HTML (no need to inline CSS)
+gulp.task('minifyhtmlpizza', function() {
+  return gulp.src('src/views/*.html').pipe(minify({
+    minify: true,
+    collapseWhitespace: true,
+    conservativeCollapse: true,
+    getKeptComment: function (content, filePath) {
+        var m = content.match(/\/\*![\s\S]*?\*\//img);
+        return m && m.join('\n') + '\n' || '';
+    }
+  })).pipe(gulp.dest('dist/views'));
+});
+
 // Minify CSS
 gulp.task('minifycss', function() {
     return gulp.src('src/**/*.css')
-        .pipe(cssnano())
+        .pipe(cssnano({discardComments: {removeAll: true}}))
         .pipe(gulp.dest('dist'));
 });
 
@@ -82,7 +95,7 @@ gulp.task('default', function(callback) {
 
 gulp.task('build', function(callback) {
   runSequence(
-    'clean:dist', 'images', 'compress', 'minifyhtml', 'minifycss',
+    'clean:dist', 'images', 'compress', 'minifyhtml', 'minifyhtmlpizza', 'minifycss',
     callback
   )
 })
