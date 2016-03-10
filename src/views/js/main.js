@@ -448,12 +448,20 @@ var resizePizzas = function(size) {
     return dx;
   }
 
+  /* 
+  Optimized function
+  Took all variables out of the initial loop, and it removed the forced
+  synchroous layout from the timeline
+  TODO: Try to remove jank and increade the fps during resize
+  */
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    var pizzaArray = document.querySelectorAll(".randomPizzaContainer");
+    var dx = determineDx(pizzaArray[0], size);
+    var pizzaOffsetWidth = pizzaArray[0].offsetWidth;
+    var newWidth = (pizzaOffsetWidth + dx) + 'px';
+    for (var i = 0; i < pizzaArray.length; i++) {
+      pizzaArray[i].style.width = newWidth;
     }
   }
 

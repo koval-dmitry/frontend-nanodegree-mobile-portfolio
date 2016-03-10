@@ -1,10 +1,10 @@
-var gulp = require('gulp');
+var gulp        = require('gulp');
 var browserSync = require('browser-sync');
-var uglify = require('gulp-uglify');
-var htmlmin = require('gulp-html-minifier');
-var cssnano = require('gulp-cssnano');
-var imagemin = require('gulp-imagemin');
-var del = require('del');
+var uglify      = require('gulp-uglify');
+var minify      = require('gulp-minifier');
+var cssnano     = require('gulp-cssnano');
+var imagemin    = require('gulp-imagemin');
+var del         = require('del');
 var runSequence = require('run-sequence');
 
 // Development Tasks 
@@ -40,9 +40,17 @@ gulp.task('compress', function() {
 
 // Minify HTML
 gulp.task('minifyhtml', function() {
-  gulp.src('src/**/*.html')
-    .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest('dist'))
+  return gulp.src('src/*.html').pipe(minify({
+    minify: true,
+    collapseWhitespace: true,
+    conservativeCollapse: true,
+    minifyJS: true,
+    minifyCSS: true,
+    getKeptComment: function (content, filePath) {
+        var m = content.match(/\/\*![\s\S]*?\*\//img);
+        return m && m.join('\n') + '\n' || '';
+    }
+  })).pipe(gulp.dest('dist'));
 });
 
 // Minify CSS
