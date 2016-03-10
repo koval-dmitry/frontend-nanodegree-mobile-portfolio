@@ -29,10 +29,13 @@ form {
   font-weight: 800;
 }
 
+/* Added transform and backface-visibility properties */
 .mover {
   position: fixed;
   width: 256px;
   z-index: -1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .randomPizzaContainer {
