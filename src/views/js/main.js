@@ -451,7 +451,7 @@ var resizePizzas = function(size) {
   /* 
   Optimized function
   Took all variables out of the initial loop, and it removed the forced
-  synchroous layout from the timeline
+  synchronous layout from the timeline
   TODO: Try to remove jank and increade the fps during resize
   */
   // Iterates through pizza elements on the page and changes their widths
